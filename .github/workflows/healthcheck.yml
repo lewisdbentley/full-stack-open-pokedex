@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  post-deploy healthcheck:
+  post_deploy_healthcheck:
     runs-on: ubuntu-18.04
     steps:
       - name: Check the deployed service URL
