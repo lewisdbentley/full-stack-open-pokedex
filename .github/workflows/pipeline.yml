@@ -58,6 +58,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: 'patch'
 
+      - uses: 8398a7/action-slack@v3
+        if: success
+        with:
+          status: ${{ job.status }}
+          fields: repo,message # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.
+
+      - uses: 8398a7/action-slack@v3
+        if: failure
+        with:
+          status: ${{ job.status }}
+          fields: all # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: always() # Pick up events even if the job fails or is canceled.
+
   a_test_job:
     runs-on: ubuntu-18.04
     steps:
@@ -87,5 +105,3 @@ jobs:
         env:
           COMMIT_MESSAGES_JOINED_CONTAINED: ${{ toJson(contains(join(github.event.commits.*.message, ', '), '#skip')) }}
         run: echo "$COMMIT_MESSAGES_JOINED_CONTAINED"
-
-        #skip commit
