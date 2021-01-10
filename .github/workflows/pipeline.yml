@@ -88,4 +88,8 @@ jobs:
           COMMIT_MESSAGES_JOINED_CONTAINED: ${{ toJson(contains(join(github.event.commits.*.message, ', '), '#skip')) }}
         run: echo "$COMMIT_MESSAGES_JOINED_CONTAINED"
 
+<<<<<<< HEAD
         #new message
+=======
+        #skip commit
+>>>>>>> a185cf2deac945367bd9b9795aeda1d6dfedf676
